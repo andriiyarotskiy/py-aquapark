@@ -1,3 +1,4 @@
+from __future__ import annotations
 from abc import ABC
 from typing import Any, Type, Optional
 
@@ -11,10 +12,10 @@ class IntegerRange:
         self.public_name = name
         self.private_name = "_" + name
 
-    def __get__(self, instance: Optional[object], owner: type) -> int:
+    def __get__(self, instance: Optional[SlideLimitationValidator], owner: type) -> int:
         return getattr(instance, self.private_name)
 
-    def __set__(self, instance: Optional[object], value: int) -> None:
+    def __set__(self, instance: Optional[SlideLimitationValidator], value: int) -> None:
         if not isinstance(value, int):
             raise TypeError("Value must be an integer")
         if value < self.min_amount or value > self.max_amount:
