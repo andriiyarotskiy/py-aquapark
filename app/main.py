@@ -1,5 +1,5 @@
 from abc import ABC
-from typing import Any
+from typing import Any, Type, Optional
 
 
 class IntegerRange:
@@ -11,10 +11,10 @@ class IntegerRange:
         self.public_name = name
         self.private_name = "_" + name
 
-    def __get__(self, instance: Any, owner: type) -> int:
+    def __get__(self, instance: Optional[object], owner: type) -> int:
         return getattr(instance, self.private_name)
 
-    def __set__(self, instance: Any, value: int) -> None:
+    def __set__(self, instance: Optional[object], value: int) -> None:
         if not isinstance(value, int):
             raise TypeError("Value must be an integer")
         if value < self.min_amount or value > self.max_amount:
@@ -54,7 +54,7 @@ class Slide:
     def __init__(
             self,
             name: str,
-            limitation_class: Any
+            limitation_class: Type[SlideLimitationValidator]
     ) -> None:
         self.name = name
         self.limitation_class = limitation_class
